@@ -60,7 +60,7 @@ public class Dealership {
         return null;
     }
 
-    public ArrayList<Vehicle> getAllVehicleBy(){
+    public ArrayList<Vehicle> getAllVehicle(){
         return this.inventory;
     }
 
