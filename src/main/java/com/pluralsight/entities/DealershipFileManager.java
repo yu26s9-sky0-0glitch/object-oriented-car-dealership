@@ -1,8 +1,13 @@
 package com.pluralsight.entities;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 
 public class DealershipFileManager {
+    /**
+     * reads the csv and loads it into dealership
+     * @return dealership object
+     */
     public Dealership getDealership() {
 
         Dealership dealership = null;
@@ -32,7 +37,24 @@ public class DealershipFileManager {
         }
         return dealership;
     }
-    public void saveDealership(Dealership dealership){
 
+    /**
+     * gets all vehicle and rewrites the csv
+     * @param dealership accepts the dealership inventory
+     */
+    public void saveDealership(Dealership dealership){
+        try{
+        FileWriter fw = new FileWriter("data/inventory.csv");
+            String header = String.format("%s|%s|%s\n",
+                    dealership.getName(),
+                    dealership.getAddress(),
+                    dealership.getPhone());
+            fw.write(header);
+        for (Vehicle v:dealership.getAllVehicle()){
+            String line = String.format("%d|%d|%s|%s|%s|%s|%d|%.2f\n",v.getVin(),v.getYear(),v.getMake(),v.getModel(),v.getVehicleType(),v.getColor(),v.getOdometer(),v.getPrice());
+            fw.write(line);
+        }}catch (Exception e){
+            System.out.println("Could not save the dealership to the file: "+ e.getMessage());
+        }
     }
 }
