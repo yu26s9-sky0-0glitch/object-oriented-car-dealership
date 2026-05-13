@@ -32,6 +32,7 @@ public class DealershipFileManager {
                 dealership.addVehicle(v);
 
             }
+            bf.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -51,9 +52,12 @@ public class DealershipFileManager {
                     dealership.getPhone());
             fw.write(header);
         for (Vehicle v:dealership.getAllVehicle()){
-            String line = String.format("%d|%d|%s|%s|%s|%s|%d|%.2f\n",v.getVin(),v.getYear(),v.getMake(),v.getModel(),v.getVehicleType(),v.getColor(),v.getOdometer(),v.getPrice());
+            String line = String.format("%d|%d|%s|%s|%s|%s|%d|%.2f\n",
+                    v.getVin(),v.getYear(),v.getMake(),v.getModel(),v.getVehicleType(),v.getColor(),v.getOdometer(),v.getPrice());
             fw.write(line);
-        }}catch (Exception e){
+        }
+        fw.close();
+        }catch (Exception e){
             System.out.println("Could not save the dealership to the file: "+ e.getMessage());
         }
     }

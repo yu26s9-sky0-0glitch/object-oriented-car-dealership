@@ -1,5 +1,4 @@
 package com.pluralsight.ui;
-
 import com.pluralsight.entities.Dealership;
 import com.pluralsight.entities.DealershipFileManager;
 import com.pluralsight.entities.Vehicle;
@@ -200,6 +199,29 @@ public class UserInterface {
      * lets user add vehicles to the dealership inventory
      */
     private void proccessGetByAddVehicleRequest() {
+        int command;
+        do{command=Console.promptForInt("""
+                1: Proceed with Adding
+                2: Go Back
+                 -> """);
+            switch (command){
+                case 1 :
+                    int vin = Console.promptForInt("Enter VIN: ");
+                    int year = Console.promptForInt("Enter Year: ");
+                    String make = Console.promptForString("Enter Make: ");
+                    String model = Console.promptForString("Enter Model: ");
+                    String type = Console.promptForString("Enter Type: ");
+                    String color = Console.promptForString("Enter Color: ");
+                    int miles = Console.promptForInt("Enter Mileage: ");
+                    double price = Console.promptForDouble("Enter Price: ");
+                    Vehicle v = new Vehicle(vin, year, make, model, type, color, miles, price);
+                    dealership.addVehicle(v);
+                    update();
+                    System.out.println("Vehicle added successfully!");
+                    break;
+                case 2:
+                    break;
+        }}while(command!=2);
     }
 
     /**
@@ -208,15 +230,24 @@ public class UserInterface {
     private void proccessGetByRemoveVehicleRequest() {
         int command;
         do{command=Console.promptForInt("""
-                1: Proceed Mileage Range 
+                1: Proceed with Removing
                 2: Go Back
                  -> """);
             switch (command){
                 case 1 :
+                    Vehicle vehicle;
                     int vin =Console.promptForInt("Enter the Vin Number  ");
-                    Vehicle vehicle = dealership.getVehicleByVin(vin);
-                    displayVehicleRequest(dealership.removeVehicle(vehicle));
+                    if ((vehicle = dealership.getVehicleByVin(vin)) != null){
+                        String name = vehicle.getMake() + " " +vehicle.getModel();
+                        dealership.removeVehicle(vehicle);
+                        System.out.println(name + " was removed");
+                        update();
+                        break;
+                    }
+                    else{
+                    System.out.println("No Match Found!");
                     break;
+                }
                 case 2:
                     break;}
         }while(command!=2);
@@ -229,6 +260,14 @@ public class UserInterface {
     private  void init(){
         DealershipFileManager fileManager = new DealershipFileManager();
         this.dealership = fileManager.getDealership();
+    }
+
+    /**
+     * updates the csv
+     */
+    private  void update(){
+        DealershipFileManager fileManager = new DealershipFileManager();
+        fileManager.saveDealership(this.dealership);
     }
 
     /**

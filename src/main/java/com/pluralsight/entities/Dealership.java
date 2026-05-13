@@ -48,7 +48,7 @@ public class Dealership {
      */
     public ArrayList<Vehicle> getVehicleByPrice (double min,double max){
         ArrayList<Vehicle> matched = new ArrayList<>();
-        for(Vehicle v:getAllVehicle()){
+        for(Vehicle v:inventory){
             if (v.getPrice()>=min && v.getPrice()<=max){
                 matched.add(v);
             }
@@ -64,7 +64,7 @@ public class Dealership {
      */
      public ArrayList<Vehicle> getVehicleByMakeModel(String make,String model){
          ArrayList<Vehicle> matched = new ArrayList<>();
-         for(Vehicle v:getAllVehicle()){
+         for(Vehicle v:inventory){
              if (v.getMake().equalsIgnoreCase(make) && v.getModel().equalsIgnoreCase(model)){
                  matched.add(v);
              }
@@ -79,7 +79,7 @@ public class Dealership {
      */
      public ArrayList<Vehicle> getVehicleByYear(int min,int max){
          ArrayList<Vehicle> matched = new ArrayList<>();
-         for(Vehicle v:getAllVehicle()){
+         for(Vehicle v:inventory){
              if (v.getYear()>=min && v.getYear()<=max){
                  matched.add(v);
              }
@@ -93,7 +93,7 @@ public class Dealership {
      */
      public ArrayList<Vehicle> getVehicleByColor(String color){
          ArrayList<Vehicle> matched = new ArrayList<>();
-         for(Vehicle v:getAllVehicle()){
+         for(Vehicle v:inventory){
              if (v.getColor().equalsIgnoreCase(color)){
                  matched.add(v);
              }
@@ -108,7 +108,7 @@ public class Dealership {
      */
      public ArrayList<Vehicle> getVehicleByMileage(int min,int max){
          ArrayList<Vehicle> matched = new ArrayList<>();
-         for(Vehicle v:getAllVehicle()){
+         for(Vehicle v:inventory){
              if (v.getOdometer()>=min && v.getOdometer()<=max){
                  matched.add(v);
              }
@@ -123,7 +123,7 @@ public class Dealership {
      */
     public ArrayList<Vehicle> getVehicleByType(String vehicleType){
         ArrayList<Vehicle> matched = new ArrayList<>();
-        for(Vehicle v:getAllVehicle()){
+        for(Vehicle v: inventory){
             if (v.getVehicleType().equalsIgnoreCase(vehicleType)){
                 matched.add(v);
             }
@@ -139,15 +139,17 @@ public class Dealership {
         inventory.add(vehicle);
     }
     public void removeVehicle(Vehicle vehicle){
+        inventory.remove(vehicle);
     }
 
     public Vehicle getVehicleByVin(int vin) {
         Vehicle matched = null;
-        for(Vehicle v:getAllVehicle()){
-            if (v.getOdometer()==vin){
+        for(Vehicle v:inventory){
+            if (v.getVin()==vin){
                 matched = v;
             }
         }
+
         return matched;
     }
 }
